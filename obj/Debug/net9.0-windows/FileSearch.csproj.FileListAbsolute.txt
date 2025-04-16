@@ -1,0 +1,16 @@
+C:\Users\Viktor\Desktop\FileSearch\bin\Debug\net9.0-windows\FileSearch.exe
+C:\Users\Viktor\Desktop\FileSearch\bin\Debug\net9.0-windows\FileSearch.deps.json
+C:\Users\Viktor\Desktop\FileSearch\bin\Debug\net9.0-windows\FileSearch.runtimeconfig.json
+C:\Users\Viktor\Desktop\FileSearch\bin\Debug\net9.0-windows\FileSearch.dll
+C:\Users\Viktor\Desktop\FileSearch\bin\Debug\net9.0-windows\FileSearch.pdb
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.csproj.GenerateResource.cache
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.AssemblyInfoInputs.cache
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.AssemblyInfo.cs
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.csproj.CoreCompileInputs.cache
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.dll
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\refint\FileSearch.dll
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.pdb
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.genruntimeconfig.cache
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\ref\FileSearch.dll
+C:\Users\Viktor\Desktop\FileSearch\obj\Debug\net9.0-windows\FileSearch.MainWindow.resources
