@@ -11,6 +11,9 @@
       "RelativeMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|solutionrelative:forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Viktor\\AppData\\Local\\SourceServer\\503cb4c26abf1d0d078ec8f7a78877ea5bad74f8a27838c86f2cc4760dd995e6\\Directory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|c:\\users\\viktor\\desktop\\filesearch\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -22,8 +25,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 383,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Directory.cs",
+              "DocumentMoniker": "C:\\Users\\Viktor\\AppData\\Local\\SourceServer\\503cb4c26abf1d0d078ec8f7a78877ea5bad74f8a27838c86f2cc4760dd995e6\\Directory.cs",
+              "RelativeDocumentMoniker": "..\\..\\AppData\\Local\\SourceServer\\503cb4c26abf1d0d078ec8f7a78877ea5bad74f8a27838c86f2cc4760dd995e6\\Directory.cs",
+              "ToolTip": "C:\\Users\\Viktor\\AppData\\Local\\SourceServer\\503cb4c26abf1d0d078ec8f7a78877ea5bad74f8a27838c86f2cc4760dd995e6\\Directory.cs",
+              "RelativeToolTip": "..\\..\\AppData\\Local\\SourceServer\\503cb4c26abf1d0d078ec8f7a78877ea5bad74f8a27838c86f2cc4760dd995e6\\Directory.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAMwCcAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T12:06:15.438Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,7 +48,7 @@
               "RelativeDocumentMoniker": "Forms\\MainWindow.cs",
               "ToolTip": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs",
               "RelativeToolTip": "Forms\\MainWindow.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAAwBkAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T09:00:09.336Z",
               "EditorCaption": ""
@@ -46,11 +62,12 @@
               "ToolTip": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "RelativeToolTip": "Forms\\MainWindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T18:52:27.568Z"
+              "WhenOpened": "2025-04-13T18:52:27.568Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -58,7 +75,8 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T08:58:39.012Z"
+              "WhenOpened": "2025-04-10T08:58:39.012Z",
+              "EditorCaption": ""
             }
           ]
         }

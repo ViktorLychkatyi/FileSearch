@@ -17,6 +17,12 @@ namespace FileSearch
 {
     public partial class MainWindow : Form
     {
+        private List<DriveInfo> drives = DriveInfo.GetDrives().ToList();
+        private List<DirectoryInfo> directories = new List<DirectoryInfo>();
+        private List<DirectoryInfo> subDirectories = new List<DirectoryInfo>();
+
+        private string[] sysPaths = { "Config.Msi" };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,13 +55,6 @@ namespace FileSearch
 
         private void LoadFiles()
         {
-            List<DriveInfo> drives = DriveInfo.GetDrives().ToList();
-            List<DirectoryInfo> directories = new List<DirectoryInfo>();
-            List<DirectoryInfo> subDirectories = new List<DirectoryInfo>();
-            List<FileInfo> files = new List<FileInfo>();
-
-            string[] sysPaths = { "Config.Msi" };
-
             try
             {
                 foreach (DriveInfo drive in drives)
@@ -81,6 +80,7 @@ namespace FileSearch
                             {
                                 continue;
                             }
+
                             ListViewItem item = new ListViewItem(file.Name);
                             item.SubItems.Add(file.FullName);
                             item.SubItems.Add((file.Length / 1024) + " KB");
@@ -107,13 +107,6 @@ namespace FileSearch
             textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
             textBox1.AutoCompleteCustomSource = autoComplete;
-
-            List<DriveInfo> drives = DriveInfo.GetDrives().ToList();
-            List<DirectoryInfo> directories = new List<DirectoryInfo>();
-            List<DirectoryInfo> subDirectories = new List<DirectoryInfo>();
-            List<FileInfo> files = new List<FileInfo>();
-
-            string[] sysPaths = { "Config.Msi" };
 
             try
             {
@@ -156,61 +149,77 @@ namespace FileSearch
 
         private void StartSearch()
         {
-            string path = textBox1.Text;
+            listView1.Items.Clear();
+            string path = textBox1.Text.Trim();
+            string mask = textBox2.Text.Trim();
 
-            if (!Directory.Exists(path))
+            if (string.IsNullOrEmpty(path) && string.IsNullOrEmpty(mask))
             {
-                MessageBox.Show("Указанная директория не существует.");
+                MessageBox.Show("Введите путь или маску для поиска.");
                 return;
             }
 
-            listView1.Items.Clear();
-
-            List<DriveInfo> drives = DriveInfo.GetDrives().ToList();
-            List<DirectoryInfo> directories = new List<DirectoryInfo>();
-            List<DirectoryInfo> subDirectories = new List<DirectoryInfo>();
-            List<FileInfo> files = new List<FileInfo>();
-
-            string[] sysPaths = { "Config.Msi" };
-
-            try
+            if (string.IsNullOrWhiteSpace(mask))
             {
-                foreach (DriveInfo drive in drives)
+                mask = "*";
+            }
+            else
+            {
+                if (!mask.StartsWith("*"))
                 {
-                    foreach (DirectoryInfo directoryInfo in drive.RootDirectory.GetDirectories())
+                    if (!mask.StartsWith("."))
                     {
-                        if (directoryInfo.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(directoryInfo.Name))
-                        {
-                            continue;
-                        }
-                        if (sysPaths.Contains(directoryInfo.Name))
-                        {
-                            continue;
-                        }
-                        directories.Add(directoryInfo);
+                        mask = "*." + mask;
+                    }
+                    else
+                    {
+                        mask = "*" + mask;
                     }
                 }
+            }
 
-                foreach (DirectoryInfo directory in directories)
+            if (string.IsNullOrEmpty(path))
+            {
+                foreach (DriveInfo drive in DriveInfo.GetDrives())
                 {
-                    if (directory.FullName == path)
+                    try
                     {
-                        subDirectories.Add(directory);
+                        directories.AddRange(drive.RootDirectory.GetDirectories());
+                    }
+                    catch 
+                    { 
+                        continue; 
                     }
                 }
+            }
+            else if (Directory.Exists(path))
+            {
+                directories.Add(new DirectoryInfo(path));
+            }
+            else
+            {
+                MessageBox.Show("Указанный путь не существует.");
+                return;
+            }
 
-                foreach (DirectoryInfo directory in subDirectories)
+            foreach (DirectoryInfo directory in directories)
+            {
+                try
                 {
-                    foreach (FileInfo file in directory.GetFiles())
+                    if (directory.Attributes.HasFlag(FileAttributes.System) || sysPaths.Contains(directory.Name))
                     {
-                        if (file.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(file.Name))
+                        continue;
+                    }
+
+                    FileInfo[] files = directory.GetFiles(mask, SearchOption.TopDirectoryOnly);
+
+                    foreach (FileInfo file in files)
+                    {
+                        if (file.Attributes.HasFlag(FileAttributes.System) || sysPaths.Contains(file.Name))
                         {
                             continue;
                         }
-                        if (sysPaths.Contains(file.Name))
-                        {
-                            continue;
-                        }
+
                         ListViewItem item = new ListViewItem(file.Name);
                         item.SubItems.Add(file.FullName);
                         item.SubItems.Add((file.Length / 1024) + " KB");
@@ -219,16 +228,12 @@ namespace FileSearch
                         listView1.Items.Add(item);
                     }
                 }
+                catch 
+                { 
+                    continue; 
+                }
             }
-            catch (UnauthorizedAccessException ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-            MessageBox.Show("Поиск успешно завершен.");
+            MessageBox.Show("Поиск завершён.");
         }
 
         private void button1_Click_2(object sender, EventArgs e)
@@ -239,6 +244,11 @@ namespace FileSearch
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             textBox1.Multiline = false;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

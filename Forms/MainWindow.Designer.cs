@@ -36,6 +36,7 @@
             columnHeader5 = new ColumnHeader();
             textBox1 = new TextBox();
             button1 = new Button();
+            textBox2 = new TextBox();
             SuspendLayout();
             // 
             // listView1
@@ -82,26 +83,36 @@
             // 
             textBox1.Location = new Point(12, 12);
             textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Введите";
-            textBox1.Size = new Size(869, 23);
+            textBox1.PlaceholderText = "Путь";
+            textBox1.Size = new Size(767, 23);
             textBox1.TabIndex = 4;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
             // button1
             // 
-            button1.Location = new Point(887, 11);
+            button1.Location = new Point(888, 11);
             button1.Name = "button1";
-            button1.Size = new Size(90, 23);
+            button1.Size = new Size(89, 24);
             button1.TabIndex = 5;
             button1.Text = "Поиск";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click_2;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(785, 11);
+            textBox2.Name = "textBox2";
+            textBox2.PlaceholderText = "Формат";
+            textBox2.Size = new Size(97, 23);
+            textBox2.TabIndex = 6;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(989, 305);
+            Controls.Add(textBox2);
             Controls.Add(button1);
             Controls.Add(textBox1);
             Controls.Add(listView1);
@@ -127,5 +138,6 @@
         private TextBox textBox1;
         private ColumnHeader columnHeader5;
         private Button button1;
+        private TextBox textBox2;
     }
 }
