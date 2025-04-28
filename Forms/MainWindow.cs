@@ -20,7 +20,7 @@ namespace FileSearch
         private List<DriveInfo> drives = DriveInfo.GetDrives().ToList();
         private List<DirectoryInfo> directories = new List<DirectoryInfo>();
         private List<DirectoryInfo> subDirectories = new List<DirectoryInfo>();
-
+        private List<FileInfo> files = new List<FileInfo>();
         private string[] sysPaths = { "Config.Msi" };
 
         public MainWindow()
@@ -45,6 +45,13 @@ namespace FileSearch
             showDirectory.IsBackground = true;
         }
 
+        private void OnSearch()
+        {
+            Thread search = new Thread(StartSearch);
+            search.Start();
+            search.IsBackground = true;
+        }
+
         private void ShowUI()
         {
             listView1.View = View.Details;
@@ -59,6 +66,8 @@ namespace FileSearch
             {
                 foreach (DriveInfo drive in drives)
                 {
+                    if (!drive.IsReady) continue;
+
                     foreach (DirectoryInfo directoryInfo in drive.RootDirectory.GetDirectories())
                     {
                         if (directoryInfo.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(directoryInfo.Name))
@@ -80,7 +89,6 @@ namespace FileSearch
                             {
                                 continue;
                             }
-
                             ListViewItem item = new ListViewItem(file.Name);
                             item.SubItems.Add(file.FullName);
                             item.SubItems.Add((file.Length / 1024) + " KB");
@@ -122,7 +130,6 @@ namespace FileSearch
                         {
                             continue;
                         }
-                        directories.Add(directoryInfo);
                         autoComplete.Add(directoryInfo.FullName);
                     }
                 }
@@ -142,80 +149,56 @@ namespace FileSearch
 
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void StartSearch()
         {
-            listView1.Items.Clear();
-            string path = textBox1.Text.Trim();
-            string mask = textBox2.Text.Trim();
+            string path = textBox1.Text;
+            string mask = textBox2.Text;
 
             if (string.IsNullOrEmpty(path) && string.IsNullOrEmpty(mask))
             {
-                MessageBox.Show("Введите путь или маску для поиска.");
+                MessageBox.Show("Пожалуйста, укажите путь к директории или маску для поиска.");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(mask))
+            try
             {
-                mask = "*";
-            }
-            else
-            {
-                if (!mask.StartsWith("*"))
+                listView1.Items.Clear();
+                foreach (DriveInfo drive in drives)
                 {
-                    if (!mask.StartsWith("."))
+                    foreach (DirectoryInfo directoryInfo in drive.RootDirectory.GetDirectories())
                     {
-                        mask = "*." + mask;
-                    }
-                    else
-                    {
-                        mask = "*" + mask;
+                        if (directoryInfo.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(directoryInfo.Name))
+                        {
+                            continue;
+                        }
+                        if (sysPaths.Contains(directoryInfo.Name))
+                        {
+                            continue;
+                        }
+                        directories.Add(directoryInfo);
                     }
                 }
-            }
 
-            if (string.IsNullOrEmpty(path))
-            {
-                foreach (DriveInfo drive in DriveInfo.GetDrives())
+                foreach (DirectoryInfo directory in directories)
                 {
-                    try
+                    if (directory.FullName == path)
                     {
-                        directories.AddRange(drive.RootDirectory.GetDirectories());
-                    }
-                    catch 
-                    { 
-                        continue; 
+                        subDirectories.Add(directory);
                     }
                 }
-            }
-            else if (Directory.Exists(path))
-            {
-                directories.Add(new DirectoryInfo(path));
-            }
-            else
-            {
-                MessageBox.Show("Указанный путь не существует.");
-                return;
-            }
 
-            foreach (DirectoryInfo directory in directories)
-            {
-                try
+                foreach (DirectoryInfo directory in subDirectories)
                 {
-                    if (directory.Attributes.HasFlag(FileAttributes.System) || sysPaths.Contains(directory.Name))
+                    foreach (FileInfo file in directory.GetFiles())
                     {
-                        continue;
-                    }
 
-                    FileInfo[] files = directory.GetFiles(mask, SearchOption.TopDirectoryOnly);
+                        if (file.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(file.Name))
+                        {
+                            continue;
+                        }
 
-                    foreach (FileInfo file in files)
-                    {
-                        if (file.Attributes.HasFlag(FileAttributes.System) || sysPaths.Contains(file.Name))
+                        if (sysPaths.Contains(file.Name))
                         {
                             continue;
                         }
@@ -228,17 +211,44 @@ namespace FileSearch
                         listView1.Items.Add(item);
                     }
                 }
-                catch 
-                { 
-                    continue; 
+
+                foreach (FileInfo file in files)
+                {
+                    if (file.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(file.Name))
+                    {
+                        continue;
+                    }
+                    if (sysPaths.Contains(file.Name))
+                    {
+                        continue;
+                    }
+                    ListViewItem item = new ListViewItem(file.Name);
+                    item.SubItems.Add(file.FullName);
+                    item.SubItems.Add((file.Length / 1024) + " KB");
+                    item.SubItems.Add(file.LastWriteTime.ToString());
+                    item.SubItems.Add(file.Extension);
+                    listView1.Items.Add(item);
                 }
             }
-            MessageBox.Show("Поиск завершён.");
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+            MessageBox.Show("Поиск успешно завершен.");
+        }
+        
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void button1_Click_2(object sender, EventArgs e)
         {
-            StartSearch();
+            OnSearch();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -247,6 +257,11 @@ namespace FileSearch
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
         {
 
         }

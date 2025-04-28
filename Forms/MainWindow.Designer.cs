@@ -34,9 +34,9 @@
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
-            textBox1 = new TextBox();
             button1 = new Button();
             textBox2 = new TextBox();
+            textBox1 = new TextBox();
             SuspendLayout();
             // 
             // listView1
@@ -79,15 +79,6 @@
             columnHeader5.Text = "Тип";
             columnHeader5.Width = 64;
             // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(12, 12);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Путь";
-            textBox1.Size = new Size(767, 23);
-            textBox1.TabIndex = 4;
-            textBox1.TextChanged += textBox1_TextChanged;
-            // 
             // button1
             // 
             button1.Location = new Point(888, 11);
@@ -107,14 +98,23 @@
             textBox2.TabIndex = 6;
             textBox2.TextChanged += textBox2_TextChanged;
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(12, 11);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Путь";
+            textBox1.Size = new Size(767, 23);
+            textBox1.TabIndex = 7;
+            textBox1.TextChanged += textBox3_TextChanged;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(989, 305);
+            Controls.Add(textBox1);
             Controls.Add(textBox2);
             Controls.Add(button1);
-            Controls.Add(textBox1);
             Controls.Add(listView1);
             Name = "MainWindow";
             Text = "Поиск файлов";
@@ -135,9 +135,9 @@
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
-        private TextBox textBox1;
         private ColumnHeader columnHeader5;
         private Button button1;
         private TextBox textBox2;
+        private TextBox textBox1;
     }
 }
