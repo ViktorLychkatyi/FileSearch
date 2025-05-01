@@ -28,31 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listView1 = new ListView();
+            button1 = new Button();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
-            button1 = new Button();
-            textBox2 = new TextBox();
+            listView1 = new ListView();
             textBox1 = new TextBox();
             SuspendLayout();
             // 
-            // listView1
+            // button1
             // 
-            listView1.BackColor = SystemColors.Window;
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
-            listView1.GridLines = true;
-            listView1.HoverSelection = true;
-            listView1.ImeMode = ImeMode.Alpha;
-            listView1.Location = new Point(12, 46);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(965, 247);
-            listView1.TabIndex = 3;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
-            listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
+            button1.Location = new Point(888, 11);
+            button1.Name = "button1";
+            button1.Size = new Size(89, 24);
+            button1.TabIndex = 5;
+            button1.Text = "Поиск";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_2;
             // 
             // columnHeader1
             // 
@@ -79,33 +73,27 @@
             columnHeader5.Text = "Тип";
             columnHeader5.Width = 64;
             // 
-            // button1
+            // listView1
             // 
-            button1.Location = new Point(888, 11);
-            button1.Name = "button1";
-            button1.Size = new Size(89, 24);
-            button1.TabIndex = 5;
-            button1.Text = "Поиск";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_2;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(785, 11);
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "Формат";
-            textBox2.Size = new Size(97, 23);
-            textBox2.TabIndex = 6;
-            textBox2.TextChanged += textBox2_TextChanged;
+            listView1.BackColor = SystemColors.Window;
+            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
+            listView1.GridLines = true;
+            listView1.HoverSelection = true;
+            listView1.ImeMode = ImeMode.Alpha;
+            listView1.Location = new Point(12, 46);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(965, 247);
+            listView1.TabIndex = 3;
+            listView1.UseCompatibleStateImageBehavior = false;
+            listView1.View = View.Details;
+            listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
             // 
             // textBox1
             // 
             textBox1.Location = new Point(12, 11);
             textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Путь";
-            textBox1.Size = new Size(767, 23);
-            textBox1.TabIndex = 7;
-            textBox1.TextChanged += textBox3_TextChanged;
+            textBox1.Size = new Size(870, 23);
+            textBox1.TabIndex = 6;
             // 
             // MainWindow
             // 
@@ -113,7 +101,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(989, 305);
             Controls.Add(textBox1);
-            Controls.Add(textBox2);
             Controls.Add(button1);
             Controls.Add(listView1);
             Name = "MainWindow";
@@ -129,15 +116,13 @@
         }
 
         #endregion
-
-        private ListView listView1;
+        private Button button1;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
         private ColumnHeader columnHeader5;
-        private Button button1;
-        private TextBox textBox2;
+        private ListView listView1;
         private TextBox textBox1;
     }
 }

@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Viktor\\Desktop\\FileSearch\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|c:\\users\\viktor\\desktop\\filesearch\\forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|solutionrelative:forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|c:\\users\\viktor\\desktop\\filesearch\\forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|solutionrelative:forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|c:\\users\\viktor\\desktop\\filesearch\\forms\\mainwindow.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|solutionrelative:forms\\mainwindow.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|C:\\Users\\Viktor\\Desktop\\FileSearch\\forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|solutionrelative:forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|c:\\users\\viktor\\desktop\\filesearch\\forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|solutionrelative:forms\\mainwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7C4DB4CC-C37F-4B2A-88BB-A1B22B04E066}|FileSearch.csproj|c:\\users\\viktor\\desktop\\filesearch\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,8 +26,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 383,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs",
+              "RelativeDocumentMoniker": "Forms\\MainWindow.cs",
+              "ToolTip": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "Forms\\MainWindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T16:12:39.276Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -36,34 +48,23 @@
               "RelativeDocumentMoniker": "Forms\\MainWindow.Designer.cs",
               "ToolTip": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.Designer.cs",
               "RelativeToolTip": "Forms\\MainWindow.Designer.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAApwDYAAABMAAAAAAAAAA==",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAjwGAAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T07:01:00.195Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainWindow.cs",
-              "DocumentMoniker": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs",
-              "RelativeDocumentMoniker": "Forms\\MainWindow.cs",
-              "ToolTip": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs",
-              "RelativeToolTip": "Forms\\MainWindow.cs",
-              "ViewState": "AgIAAN8AAAAAAAAAAAAQwL4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T09:00:09.336Z",
+              "WhenOpened": "2025-04-30T11:52:57.966Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MainWindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Title": "MainWindow.cs",
               "DocumentMoniker": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs",
               "RelativeDocumentMoniker": "Forms\\MainWindow.cs",
-              "ToolTip": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "RelativeToolTip": "Forms\\MainWindow.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "ToolTip": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Forms\\MainWindow.cs",
+              "RelativeToolTip": "Forms\\MainWindow.cs",
+              "ViewState": "AgIAAHoAAAAAAAAAAADwv3AAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T18:52:27.568Z"
+              "WhenOpened": "2025-04-10T09:00:09.336Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -73,9 +74,10 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\Viktor\\Desktop\\FileSearch\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T08:58:39.012Z"
+              "WhenOpened": "2025-04-10T08:58:39.012Z",
+              "EditorCaption": ""
             }
           ]
         }

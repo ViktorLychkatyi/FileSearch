@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace FileSearch
@@ -21,35 +22,27 @@ namespace FileSearch
         private List<DirectoryInfo> directories = new List<DirectoryInfo>();
         private List<DirectoryInfo> subDirectories = new List<DirectoryInfo>();
         private List<FileInfo> files = new List<FileInfo>();
-        private string[] sysPaths = { "Config.Msi" };
+
+        private string[] sysPaths =
+        {
+            "Config.Msi"
+        };
 
         public MainWindow()
         {
             InitializeComponent();
             ShowUI();
             ShowFiles();
-            ShowDirectories();
+            //ShowDirectories();
         }
+
+        // вызов
 
         private void ShowFiles()
         {
             Thread loadFiles = new Thread(LoadFiles);
             //loadFiles.Start();
             loadFiles.IsBackground = true;
-        }
-
-        private void ShowDirectories()
-        {
-            Thread showDirectory = new Thread(ShowDirectory);
-            showDirectory.Start();
-            showDirectory.IsBackground = true;
-        }
-
-        private void OnSearch()
-        {
-            Thread search = new Thread(StartSearch);
-            search.Start();
-            search.IsBackground = true;
         }
 
         private void ShowUI()
@@ -60,54 +53,77 @@ namespace FileSearch
             listView1.Cursor = Cursors.Hand;
         }
 
+        private void ShowDirectories()
+        {
+            Thread showDirectory = new Thread(ShowDirectory);
+            showDirectory.Start();
+            showDirectory.IsBackground = true;
+        }
+
+        //private void OnSearch()
+        //{
+        //    Thread search = new Thread(StartSearch);
+        //    search.Start();
+        //    search.IsBackground = true;
+        //}
+
+        //  отображение файлов и при поиске
+
         private void LoadFiles()
         {
             try
             {
-                foreach (DriveInfo drive in drives)
+                foreach (var drive in drives)
                 {
-                    if (!drive.IsReady) continue;
-
-                    foreach (DirectoryInfo directoryInfo in drive.RootDirectory.GetDirectories())
+                    if (drive.IsReady)
                     {
-                        if (directoryInfo.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(directoryInfo.Name))
+                        foreach (var directory in drive.RootDirectory.GetDirectories())
                         {
-                            continue;
-                        }
-                        if (sysPaths.Contains(directoryInfo.Name))
-                        {
-                            continue;
-                        }
-
-                        foreach (FileInfo file in directoryInfo.GetFiles())
-                        {
-                            if (file.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(file.Name))
+                            if (directory != null && !sysPaths.Contains(directory.Name))
                             {
-                                continue;
+                                RecursionFiles(directory);
+                                directories.Add(directory);
+                                subDirectories.AddRange(directory.GetDirectories());
                             }
-                            if (sysPaths.Contains(file.Name))
-                            {
-                                continue;
-                            }
-                            ListViewItem item = new ListViewItem(file.Name);
-                            item.SubItems.Add(file.FullName);
-                            item.SubItems.Add((file.Length / 1024) + " KB");
-                            item.SubItems.Add(file.LastWriteTime.ToString());
-                            item.SubItems.Add(file.Extension);
-                            listView1.Items.Add(item);
                         }
                     }
                 }
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
+
+        // рекурсивный поиск файлов
+
+        private void RecursionFiles(DirectoryInfo directory)
+        {
+            try
+            {
+                foreach (var file in directory.GetFiles())
+                {
+                    if (!sysPaths.Contains(file.Name))
+                    {
+                        //files.Add(file);
+                        ListViewItem item = new ListViewItem(file.Name);
+                        item.SubItems.Add(file.FullName);
+                        item.SubItems.Add((file.Length / 1024) + " KB");
+                        item.SubItems.Add(file.LastWriteTime.ToString());
+                        item.SubItems.Add(file.Extension);
+                        listView1.Items.Add(item);
+                    }
+                }
+                foreach (var dir in directory.GetDirectories())
+                {
+                    //RecursionFiles(dir); // поддиректории показывает
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
+        }
+
+        // показать директории при поиске
 
         private void ShowDirectory()
         {
@@ -118,129 +134,45 @@ namespace FileSearch
 
             try
             {
-                foreach (DriveInfo drive in drives)
+                foreach (var drive in drives)
                 {
-                    foreach (DirectoryInfo directoryInfo in drive.RootDirectory.GetDirectories())
-                    {
-                        if (directoryInfo.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(directoryInfo.Name))
-                        {
-                            continue;
-                        }
-                        if (sysPaths.Contains(directoryInfo.Name))
-                        {
-                            continue;
-                        }
-                        autoComplete.Add(directoryInfo.FullName);
-                    }
+                    if (!drive.IsReady) continue;
+
+                    RecursionDirectories(drive.RootDirectory, autoComplete);
+                    autoComplete.Add(drive.RootDirectory.FullName);
+
                 }
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
+
+        private void RecursionDirectories(DirectoryInfo directory, AutoCompleteStringCollection autoComplete)
+        {
+            try
+            {
+                if (directory == null || sysPaths.Contains(directory.Name)) return;
+                autoComplete.Add(directory.FullName);
+
+                foreach (var subDir in directory.GetDirectories())
+                {
+                    RecursionDirectories(subDir, autoComplete);
+                    autoComplete.Add(subDir.FullName);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
+        }
+
 
         public void MainWindow_Load()
         {
 
+
         }
 
-
-        private void StartSearch()
-        {
-            string path = textBox1.Text;
-            string mask = textBox2.Text;
-
-            if (string.IsNullOrEmpty(path) && string.IsNullOrEmpty(mask))
-            {
-                MessageBox.Show("Пожалуйста, укажите путь к директории или маску для поиска.");
-                return;
-            }
-
-            try
-            {
-                listView1.Items.Clear();
-                foreach (DriveInfo drive in drives)
-                {
-                    foreach (DirectoryInfo directoryInfo in drive.RootDirectory.GetDirectories())
-                    {
-                        if (directoryInfo.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(directoryInfo.Name))
-                        {
-                            continue;
-                        }
-                        if (sysPaths.Contains(directoryInfo.Name))
-                        {
-                            continue;
-                        }
-                        directories.Add(directoryInfo);
-                    }
-                }
-
-                foreach (DirectoryInfo directory in directories)
-                {
-                    if (directory.FullName == path)
-                    {
-                        subDirectories.Add(directory);
-                    }
-                }
-
-                foreach (DirectoryInfo directory in subDirectories)
-                {
-                    foreach (FileInfo file in directory.GetFiles())
-                    {
-
-                        if (file.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(file.Name))
-                        {
-                            continue;
-                        }
-
-                        if (sysPaths.Contains(file.Name))
-                        {
-                            continue;
-                        }
-
-                        ListViewItem item = new ListViewItem(file.Name);
-                        item.SubItems.Add(file.FullName);
-                        item.SubItems.Add((file.Length / 1024) + " KB");
-                        item.SubItems.Add(file.LastWriteTime.ToString());
-                        item.SubItems.Add(file.Extension);
-                        listView1.Items.Add(item);
-                    }
-                }
-
-                foreach (FileInfo file in files)
-                {
-                    if (file.Attributes.HasFlag(FileAttributes.System) && !sysPaths.Contains(file.Name))
-                    {
-                        continue;
-                    }
-                    if (sysPaths.Contains(file.Name))
-                    {
-                        continue;
-                    }
-                    ListViewItem item = new ListViewItem(file.Name);
-                    item.SubItems.Add(file.FullName);
-                    item.SubItems.Add((file.Length / 1024) + " KB");
-                    item.SubItems.Add(file.LastWriteTime.ToString());
-                    item.SubItems.Add(file.Extension);
-                    listView1.Items.Add(item);
-                }
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-            MessageBox.Show("Поиск успешно завершен.");
-        }
-        
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -248,16 +180,13 @@ namespace FileSearch
 
         private void button1_Click_2(object sender, EventArgs e)
         {
-            OnSearch();
+            listView1.Items.Clear();
+            //OnSearch();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            textBox1.Multiline = false;
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
+            
 
         }
 
