@@ -33,7 +33,8 @@ namespace FileSearch
             InitializeComponent();
             ShowUI();
             ShowFiles();
-            //ShowDirectories();
+            ShowDirectories();
+            this.DoubleBuffered = true;
         }
 
         // вызов
@@ -45,19 +46,19 @@ namespace FileSearch
             loadFiles.IsBackground = true;
         }
 
+        private void ShowDirectories()
+        {
+            Thread showDirectory = new Thread(ShowDirectory);
+            showDirectory.Start();
+            showDirectory.IsBackground = true;
+        }
+
         private void ShowUI()
         {
             listView1.View = View.Details;
             listView1.FullRowSelect = true;
             listView1.HoverSelection = true;
             listView1.Cursor = Cursors.Hand;
-        }
-
-        private void ShowDirectories()
-        {
-            Thread showDirectory = new Thread(ShowDirectory);
-            showDirectory.Start();
-            showDirectory.IsBackground = true;
         }
 
         //  отображение файлов и при поиске
@@ -129,7 +130,7 @@ namespace FileSearch
             {
                 foreach (var drive in drives)
                 {
-                    if (drive.IsReady) continue;
+                    if (drive.IsReady)
 
                     RecursionDirectories(drive.RootDirectory, autoComplete);
                     autoComplete.Add(drive.RootDirectory.FullName);
@@ -145,13 +146,14 @@ namespace FileSearch
         {
             try
             {
+                this.DoubleBuffered = true;
                 if (directory == null || sysPaths.Contains(directory.Name)) return;
-                autoComplete.Add(directory.FullName);
+                Invoke((MethodInvoker)(() => autoComplete.Add(directory.FullName)));
 
                 foreach (var subDir in directory.GetDirectories())
                 {
                     RecursionDirectories(subDir, autoComplete);
-                    autoComplete.Add(subDir.FullName);
+                    Invoke((MethodInvoker)(() => autoComplete.Add(subDir.FullName)));
                 }
             }
             catch (UnauthorizedAccessException)
@@ -231,8 +233,7 @@ namespace FileSearch
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
-
+            ShowDirectories();
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
