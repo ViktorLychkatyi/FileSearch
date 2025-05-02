@@ -60,13 +60,6 @@ namespace FileSearch
             showDirectory.IsBackground = true;
         }
 
-        //private void OnSearch()
-        //{
-        //    Thread search = new Thread(StartSearch);
-        //    search.Start();
-        //    search.IsBackground = true;
-        //}
-
         //  отображение файлов и при поиске
 
         private void LoadFiles()
@@ -83,7 +76,7 @@ namespace FileSearch
                             {
                                 RecursionFiles(directory);
                                 directories.Add(directory);
-                                subDirectories.AddRange(directory.GetDirectories());
+                                //subDirectories.AddRange(directory.GetDirectories());
                             }
                         }
                     }
@@ -136,7 +129,7 @@ namespace FileSearch
             {
                 foreach (var drive in drives)
                 {
-                    if (!drive.IsReady) continue;
+                    if (drive.IsReady) continue;
 
                     RecursionDirectories(drive.RootDirectory, autoComplete);
                     autoComplete.Add(drive.RootDirectory.FullName);
@@ -166,6 +159,58 @@ namespace FileSearch
             }
         }
 
+        // обработка поиска из LoadFiles
+
+        private void StartSearch()
+        {
+            string path = textBox1.Text;
+
+            if (string.IsNullOrEmpty(path))
+            {
+                MessageBox.Show("Введите путь к файлу или директории", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                if (File.Exists(path))
+                {
+                    FileInfo file = new FileInfo(path);
+                    ListViewItem item = new ListViewItem(file.Name);
+                    item.SubItems.Add(file.FullName);
+                    item.SubItems.Add((file.Length / 1024) + " KB");
+                    item.SubItems.Add(file.LastWriteTime.ToString());
+                    item.SubItems.Add(file.Extension);
+                    listView1.Items.Add(item);
+                }
+                else if (Directory.Exists(path))
+                {
+                    DirectoryInfo dir = new DirectoryInfo(path);
+
+                    foreach (var directory in dir.GetDirectories())
+                    {
+                        if (directory != null && !sysPaths.Contains(directory.Name))
+                        {
+                            RecursionFiles(directory);
+                            directories.Add(directory);
+                            //subDirectories.AddRange(directory.GetDirectories());
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Указанный путь не существует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("Доступ к указанному пути запрещен", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         public void MainWindow_Load()
         {
@@ -181,12 +226,12 @@ namespace FileSearch
         private void button1_Click_2(object sender, EventArgs e)
         {
             listView1.Items.Clear();
-            //OnSearch();
+            StartSearch();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            
+
 
         }
 
