@@ -33,7 +33,7 @@ namespace FileSearch
             InitializeComponent();
             ShowUI();
             ShowFiles();
-            ShowDirectories();
+            //ShowDirectories();
             this.DoubleBuffered = true;
         }
 
@@ -46,12 +46,12 @@ namespace FileSearch
             loadFiles.IsBackground = true;
         }
 
-        private void ShowDirectories()
-        {
-            Thread showDirectory = new Thread(ShowDirectory);
-            showDirectory.Start();
-            showDirectory.IsBackground = true;
-        }
+        //private void ShowDirectories()
+        //{
+        //    Thread showDirectory = new Thread(ShowDirectory);
+        //    showDirectory.Start();
+        //    showDirectory.IsBackground = true;
+        //}
 
         private void ShowUI()
         {
@@ -119,28 +119,28 @@ namespace FileSearch
 
         // показать директории при поиске
 
-        private void ShowDirectory()
-        {
-            textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            textBox1.AutoCompleteCustomSource = autoComplete;
+        //private void ShowDirectory()
+        //{
+        //    textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        //    textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+        //    AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
+        //    textBox1.AutoCompleteCustomSource = autoComplete;
 
-            try
-            {
-                foreach (var drive in drives)
-                {
-                    if (drive.IsReady)
+        //    try
+        //    {
+        //        foreach (var drive in drives)
+        //        {
+        //            if (drive.IsReady)
 
-                    RecursionDirectories(drive.RootDirectory, autoComplete);
-                    autoComplete.Add(drive.RootDirectory.FullName);
+        //            RecursionDirectories(drive.RootDirectory, autoComplete);
+        //            autoComplete.Add(drive.RootDirectory.FullName);
 
-                }
-            }
-            catch (UnauthorizedAccessException)
-            {
-            }
-        }
+        //        }
+        //    }
+        //    catch (UnauthorizedAccessException)
+        //    {
+        //    }
+        //}
 
         private void RecursionDirectories(DirectoryInfo directory, AutoCompleteStringCollection autoComplete)
         {
@@ -233,7 +233,7 @@ namespace FileSearch
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            ShowDirectories();
+            //ShowDirectories();
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
